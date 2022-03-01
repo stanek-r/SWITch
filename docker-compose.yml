@@ -1,10 +1,10 @@
 services:
   frontend:
-    build: ../frontend
+    build: frontend
     ports:
-      - "80:4200"
+      - "4200:4200"
   backend:
-    build: ../backend
+    build: backend
     ports:
       - "8080:8080"
   mongo:
@@ -12,7 +12,7 @@ services:
     ports:
       - "27017:27017"
     container_name: mongo
-    volumes: ["../data/mongo:/data/db"]
+    volumes: ["./data/mongo:/data/db"]
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: super_secret_password
