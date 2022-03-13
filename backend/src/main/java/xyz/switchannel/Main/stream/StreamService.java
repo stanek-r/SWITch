@@ -13,8 +13,11 @@ public class StreamService {
     @Autowired
     StreamSettingsRepository streamSettingsRepository;
 
-    public boolean checkCredentials(User user, String liveKey) {
-        if (liveKey == null || liveKey.strip().equals("")) {
+    public boolean checkCredentials(User user, String userName, String liveKey) {
+        if (liveKey == null || liveKey.strip().equals("") || userName == null || userName.strip().equals("")) {
+            return false;
+        }
+        if (!user.getName().equals(userName)) {
             return false;
         }
         StreamSettings streamSettings = streamSettingsRepository.findStreamSettingsByUserId(user.getId());

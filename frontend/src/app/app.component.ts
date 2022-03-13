@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 declare var videojs: any;
 
@@ -7,10 +7,12 @@ declare var videojs: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
   public streamUrl?: string;
 
-  ngOnInit(): void {
+  @ViewChild('streamPlayer') streamPlayer!: ElementRef;
+
+  constructor() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     if (urlParams.has('streamKey')) {
@@ -19,6 +21,11 @@ export class AppComponent implements OnInit {
         urlParams.get('streamKey') +
         '/index.m3u8';
     }
-    videojs('streamPlayer').play();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.streamUrl && this.streamPlayer) {
+      videojs(this.streamPlayer.nativeElement).play();
+    }
   }
 }
