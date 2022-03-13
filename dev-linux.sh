@@ -1,4 +1,4 @@
 docker compose rm -f
-docker rmi swi-ch_frontend
-docker rmi swi-ch_backend
+docker rmi switch_frontend
+docker rmi switch_backend
 docker-compose up
