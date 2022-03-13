@@ -19,11 +19,12 @@ public class RTMPAuthController {
 
     @PostMapping("auth")
     public void checkCredentials(@RequestBody MultiValueMap<String, String> userFormData) {
+        String userId = userFormData.getFirst("name");
         String userName = userFormData.getFirst("user");
         String liveKey = userFormData.getFirst("key");
 
-        User user = userService.getUserByName(userName);
-        if (!streamService.checkCredentials(user, liveKey)) {
+        User user = userService.getUserById(userId);
+        if (!streamService.checkCredentials(user, userName, liveKey)) {
             throw new ForbiddenException("Wrong credentials!");
         }
     }
